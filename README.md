@@ -61,11 +61,11 @@ Porque primero procesa directamente y suma 45 segundos. Después, en ejecutarTur
 
 a) ¿Qué regla de la sección 1.2 rompió `torno.piezasProcesadas = -5;`?
 
-[Inserta aquí tu respuesta]
+Rompió la regla de que las piezas procesadas no pueden ser negativas.
 
 b) ¿De dónde salió la máquina "Fantasma"? ¿Qué hizo el compilador sin que se lo pidieras?
 
-[Inserta aquí tu respuesta]
+El compilador convirtió automáticamente el texto "Fantasma" en un objeto Maquina, porque el constructor todavía no tenía explicit.
 
 c) ¿Qué tuviste que cambiar en `Torno` y `Fresadora` y por qué?
 
