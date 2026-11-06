@@ -2,23 +2,25 @@
 
 Programación Orientada a Objetos · Ingeniería Mecatrónica · Tercer semestre
 
-Llena cada espacio conforme avances en las fases de [PRACTICA.md](PRACTICA.md).
 
 ## Fase 1. Entender el problema
 
 **1.1 El problema con mis propias palabras**
 
-[Inserta aquí tu respuesta]
+La planta necesita un programa para controlar las máquinas que trabajan en su línea de producción, Cada máquina debe registrar cuántas piezas procesa, cuánto tiempo trabaja y cuánto tarda en completar un ciclo. El programa debe permitir ejecutar turnos y generar reportes para conocer el rendimiento de cada máquina evitando errores usando restricciones y reglas.
 
-**1.2 Reglas que siempre deben cumplirse en una máquina** (escribe al menos tres)
+**1.2 Reglas que siempre deben cumplirse en una máquina** 
 
-1. _____
-2. _____
-3. _____
+1. El nombre de la máquina no debe estar vacío.
+2. La cantidad de piezas procesadas nunca debe ser negativa.
+3. El tiempo trabajado nunca debe ser negativo.
+4. El tiempo de cada ciclo de procesamiento debe ser mayor que cero.
+
+
 
 **1.3 ¿Quién más usa la clase `Maquina`? ¿Qué podría salir mal si otro equipo crea una máquina nueva sin conocer tus reglas?**
 
-[Inserta aquí tu respuesta]
+Otros equipos también van a utilizar la clase Maquina para crear sus propias máquinas. Si no conocen las reglas, podrían programar máquinas con datos incorrectos, como tiempos negativos o nombres vacíos. Esto podría causar errores en los resultados y en el funcionamiento del programa.
 
 ## Fase 2. Diseñar la solución
 
