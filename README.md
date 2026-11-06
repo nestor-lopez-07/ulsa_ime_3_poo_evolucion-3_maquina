@@ -51,11 +51,11 @@ Otros equipos también van a utilizar la clase Maquina para crear sus propias m�
 
 a) ¿Qué imprime `ejecutarTurno()` para el torno y la fresadora? ¿Por qué no imprime "torneando" ni "fresando"?
 
-[Inserta aquí tu respuesta]
+Porque la función recibe una referencia de tipo Maquina y utiliza el método de la clase base, ya que todavía no usamos virtual.
 
 b) ¿Por qué el torno acumula 65 s y no 135 s?
 
-[Inserta aquí tu respuesta]
+Porque primero procesa directamente y suma 45 segundos. Después, en ejecutarTurno(), realiza dos ciclos genéricos de 10 segundos cada uno. Por eso suma 65 segundos.
 
 **3.1 Etapa 1. Invariantes y constructores explicit**
 
