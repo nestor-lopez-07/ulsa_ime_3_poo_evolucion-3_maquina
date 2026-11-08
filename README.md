@@ -36,14 +36,14 @@ Otros equipos también van a utilizar la clase Maquina para crear sus propias m�
 
 | Elemento | Etapa 0 | Etapa 9 | Etapa que lo cambió |
 | --- | --- | --- | --- |
-| Visibilidad de los atributos de `Maquina` | _____ | _____ | _____ |
-| `procesar()` | _____ | _____ | _____ |
-| `tiempoCicloSeg()` | _____ | _____ | _____ |
-| Destructor de `Maquina` | _____ | _____ | _____ |
-| ¿Se pueden crear objetos `Maquina`? | _____ | _____ | _____ |
-| Relación `ControlDeLinea` - `Maquina` | _____ | _____ | _____ |
-| Relación `Torno` - `Motor` | _____ | _____ | _____ |
-| Relación `BandaTransportadora` - `Motor` | _____ | _____ | _____ |
+| Visibilidad de los atributos de `Maquina` | Públicos | Privados | Etapa 1 |
+| `procesar()` | No virtual | Se volvió virtual para permitir sobrescritura | Etapas 2 y 7: primero virtual; finalmente no virtual para que la base aplique el contrato |
+| `tiempoCicloSeg()` | Concreto | Virtual y después virtual puro con `const` | Etapas 2 y 5 |
+| Destructor de `Maquina` | No virtual | `virtual ~Maquina() = default;` | Etapa 4 |
+| ¿Se pueden crear objetos `Maquina`? | Sí | No, es abstracta | Etapa 5 |
+| Relación `ControlDeLinea` - `Maquina` | Copias por valor | Punteros, sin propiedad | Etapa 3 |
+| Relación `Torno` - `Motor` | Sin composición explícita | `Torno` contiene un `Motor` | Etapa 4 |
+| Relación `BandaTransportadora` - `Motor` | Herencia incorrecta | `BandaTransportadora` contiene un `Motor` | Etapa 8 |
 
 ## Fase 3. Implementar
 
@@ -69,7 +69,7 @@ El compilador convirtió automáticamente el texto "Fantasma" en un objeto Maqui
 
 c) ¿Qué tuviste que cambiar en `Torno` y `Fresadora` y por qué?
 
-Tuve que cambiar la forma de acceder a los atributos de Maquina. Reemplacé el acceso directo a nombre por getNombre(), y utilicé registrarPieza() y agregarTiempo() para modificar las piezas y el tiempo. Esto fue necesario porque los atributos ahora son privados y solo se pueden modificar mediante los métodos protegidos de la clase base.
+Tuve que cambiar la forma de acceder a los atributos de Maquina. Reemplacé el acceso directo a nombre por getNombre(). En la versión final, la clase base registra las piezas y el tiempo; las derivadas solo implementan ejecutarCiclo() y tiempoCicloSeg().
 
 **3.2 Etapa 2. Virtual y override**
 
@@ -165,19 +165,19 @@ Es composición porque la banda tiene su propio motor como parte de ella. La ban
 
 a) Después de agregar la `Cortadora`, ¿qué archivos mostró `git status`? ¿Cuántos archivos de la librería tuviste que modificar?
 
-[Inserta aquí tu respuesta]
+Se agregaron `include/Cortadora.h` y `src/Cortadora.cpp`, y se registró la nueva máquina en `src/main.cpp`. Para añadirla no fue necesario modificar los archivos de las demás clases de la librería: se creó la interfaz y la implementación de Cortadora.
 
 b) ¿Qué pasó al escribir `-lplanta` antes de `src/main.cpp`? ¿Por qué?
 
-[Inserta aquí tu respuesta]
+Si se escribe `-lplanta` antes de `src/main.cpp` (o de los archivos objeto que usan la librería), el enlazador puede procesar la biblioteca estática antes de conocer las referencias que debe resolver y dejar símbolos sin resolver. La biblioteca debe aparecer después de los archivos objeto o fuentes que la utilizan.
 
 **3.10 Bitácora de dudas**
 
 | # | Etapa | Duda | Cómo la resolví | Fuente |
 | --- | --- | --- | --- | --- |
-| 1 | _____ | _____ | _____ | _____ |
-| 2 | _____ | _____ | _____ | _____ |
-| 3 | _____ | _____ | _____ | _____ |
+| 1 | 2 | ¿Por qué `tiempoCicloSeg()` no sobrescribía la versión de la base? | Añadí `const` a la firma y marqué la sobrescritura con `override`. | Mensaje del compilador y prueba de capacidad |
+| 2 | 3 | ¿Por qué las máquinas de la línea no actualizaban los objetos originales? | Reemplacé el almacenamiento por valor con punteros a las máquinas existentes. | Reporte de piezas y conceptos de polimorfismo |
+| 3 | 7 | ¿Cómo garantizar que cada ciclo registre una pieza y un tiempo válidos? | La base valida el tiempo y centraliza el procesamiento y el registro. | Pruebas de tiempo inválido |
 
 ## Fase 4. Probar y mejorar
 
@@ -185,30 +185,30 @@ b) ¿Qué pasó al escribir `-lplanta` antes de `src/main.cpp`? ¿Por qué?
 
 | # | Caso | Resultado esperado | Resultado obtenido | ¿Pasa? |
 | --- | --- | --- | --- | --- |
-| 1 | Máquina con nombre vacío | Excepción con mensaje claro | _____ | _____ |
-| 2 | Reporte de una línea vacía | "La linea no tiene maquinas" | _____ | _____ |
-| 3 | `agregar(nullptr)` | Devuelve `false` | _____ | _____ |
-| 4 | Reporte antes de ejecutar el turno | 0 piezas, 0 s y capacidad calculada | _____ | _____ |
-| 5 | Turno de 0 ciclos | Nada cambia | _____ | _____ |
-| 6 | Torno con 3 ciclos | 3 piezas, 135 s, 80 pzas/h | _____ | _____ |
-| 7 | Máquina con `tiempoCicloSeg()` igual a 0 | Excepción con mensaje claro | _____ | _____ |
-| 8 | Máquina con `tiempoCicloSeg()` negativo | Excepción con mensaje claro | _____ | _____ |
-| 9 | La misma máquina agregada dos veces | _____ | _____ | _____ |
+| 1 | Máquina con nombre vacío | Excepción con mensaje claro | `invalid_argument`: el nombre de la máquina no puede estar vacío | Sí |
+| 2 | Reporte de una línea vacía | "La linea no tiene maquinas" | Se imprime "La linea no tiene maquinas" y no se intenta reportar máquinas | Sí |
+| 3 | `agregar(nullptr)` | Devuelve `false` | Devuelve `false`; la línea queda sin cambios | Sí |
+| 4 | Reporte antes de ejecutar el turno | 0 piezas, 0 s y capacidad calculada | Torno nuevo: 0 piezas, 0 s y 80 pzas/h | Sí |
+| 5 | Turno de 0 ciclos | Nada cambia | Las piezas y el tiempo acumulado permanecen iguales | Sí |
+| 6 | Torno con 3 ciclos | 3 piezas, 135 s, 80 pzas/h | 3 piezas, 135 s y 80 pzas/h | Sí |
+| 7 | Máquina con `tiempoCicloSeg()` igual a 0 | Excepción con mensaje claro | `invalid_argument` con el nombre de la máquina; no se registra el ciclo | Sí |
+| 8 | Máquina con `tiempoCicloSeg()` negativo | Excepción con mensaje claro | `invalid_argument` con el nombre de la máquina; no se registra el ciclo | Sí |
+| 9 | La misma máquina agregada dos veces | El segundo registro devuelve `false`; se procesa y reporta una sola vez | El segundo `agregar` devuelve `false`; un ciclo registra una pieza y su tiempo una vez | Sí |
 
 **4.2 Bitácora de mejoras**
 
 | # | Falla o mejora detectada | Qué cambié | Por qué |
 | --- | --- | --- | --- |
-| 1 | _____ | _____ | _____ |
-| 2 | _____ | _____ | _____ |
+| 1 | Se podía calcular capacidad con tiempo cero o negativo | Validé el tiempo de ciclo antes de procesar y calcular capacidad | Evitar división entre cero y estados inválidos |
+| 2 | Una máquina podía agregarse varias veces a la línea | `agregar` rechaza punteros nulos y duplicados | Evitar procesamiento y conteo duplicados accidentales |
 
-Retos opcionales que intenté: _____
+Retos opcionales que intenté: agregué Cortadora como una nueva derivada sin modificar las otras clases de la librería.
 
 ## Fase 5. Publicar en GitHub
 
 **5.1 Enlace a mi fork**
 
-[Inserta aquí el enlace a tu fork]
+https://github.com/nestor-lopez-07/ulsa_ime_3_poo_evolucion-3_maquina
 
 ## Cierre y reflexión
 
@@ -216,23 +216,23 @@ Retos opcionales que intenté: _____
 
 | Error | Etapa en que apareció | Restricción que lo impide ahora | ¿Quién lo detecta: el compilador o el programa? |
 | --- | --- | --- | --- |
-| Contadores con valores inválidos | _____ | _____ | _____ |
-| Máquina "fantasma" creada a escondidas | _____ | _____ | _____ |
-| Método que no sobrescribe por un `const` | _____ | _____ | _____ |
-| Máquinas copiadas y "rebanadas" | _____ | _____ | _____ |
-| Destrucción incompleta | _____ | _____ | _____ |
-| Máquina sin `procesar()` propio | _____ | _____ | _____ |
-| Tiempo de ciclo inválido | _____ | _____ | _____ |
-| Derivada que no registra sus piezas | _____ | _____ | _____ |
+| Contadores con valores inválidos | 1 | Los contadores son privados y solo la base los modifica al procesar | El compilador impide el acceso directo; el programa valida entradas |
+| Máquina "fantasma" creada a escondidas | 1 | Constructor `explicit` | El compilador |
+| Método que no sobrescribe por un `const` | 2 | `override` en la declaración derivada | El compilador |
+| Máquinas copiadas y "rebanadas" | 3 | `ControlDeLinea` guarda punteros a `Maquina` | La decisión de diseño evita el slicing |
+| Destrucción incompleta | 4 | Destructor virtual de `Maquina` | El lenguaje despacha correctamente la destrucción polimórfica |
+| Máquina sin `procesar()` propio | 5 | `Maquina` es abstracta y `tiempoCicloSeg()` es virtual puro | El compilador impide instanciar una derivada incompleta |
+| Tiempo de ciclo inválido | 7 | La base valida el ciclo antes de procesarlo y de calcular capacidad | El programa lanza una excepción |
+| Derivada que no registra sus piezas | 7 | `procesar()` no es virtual y la base registra cada ciclo | El diseño de la clase base |
 
 **6.2 ¿Cuál de los errores fue el más peligroso: el de compilación, la advertencia o el que compilaba sin problemas? ¿Por qué?**
 
-[Inserta aquí tu respuesta]
+El más peligroso es el que compila sin problemas pero produce resultados incorrectos: puede pasar inadvertido y contaminar los reportes. Los errores de compilación y las advertencias, en cambio, dan señales antes de confiar en el resultado.
 
 **6.3 ¿Qué aprendiste en esta práctica?**
 
-[Inserta aquí tu respuesta]
+Aprendí a usar encapsulamiento, herencia y polimorfismo con contratos que la clase base puede hacer cumplir; también a distinguir composición y agregación y a validar el comportamiento mediante pruebas.
 
 **6.4 ¿Qué cambiarías de tu proceso la próxima vez?**
 
-[Inserta aquí tu respuesta]
+Primero definiría y probaría los contratos y los casos límite, compilaría con advertencias estrictas desde el inicio y revisaría el reporte después de cada cambio.

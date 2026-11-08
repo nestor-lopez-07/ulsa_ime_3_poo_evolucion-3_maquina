@@ -1,9 +1,11 @@
 #include "ControlDeLinea.h"
 
+#include <algorithm>
 #include <iostream>
 namespace planta {
 bool ControlDeLinea::agregar(Maquina* maquina) {
-    if (maquina == nullptr) {
+    if (maquina == nullptr ||
+        std::find(maquinas.begin(), maquinas.end(), maquina) != maquinas.end()) {
         return false;
     }
     maquinas.push_back(maquina);
