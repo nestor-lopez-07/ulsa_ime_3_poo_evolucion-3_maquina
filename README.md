@@ -69,7 +69,7 @@ El compilador convirtió automáticamente el texto "Fantasma" en un objeto Maqui
 
 c) ¿Qué tuviste que cambiar en `Torno` y `Fresadora` y por qué?
 
-[Inserta aquí tu respuesta]
+Tuve que cambiar la forma de acceder a los atributos de Maquina. Reemplacé el acceso directo a nombre por getNombre(), y utilicé registrarPieza() y agregarTiempo() para modificar las piezas y el tiempo. Esto fue necesario porque los atributos ahora son privados y solo se pueden modificar mediante los métodos protegidos de la clase base.
 
 **3.2 Etapa 2. Virtual y override**
 
