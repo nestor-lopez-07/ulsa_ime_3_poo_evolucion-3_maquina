@@ -75,25 +75,25 @@ Tuve que cambiar la forma de acceder a los atributos de Maquina. Reemplacé el a
 
 a) La fresadora acumula 180 s, pero reporta 360 pzas/h. ¿Por qué un cálculo usó 60 s y el otro 10 s?
 
-[Inserta aquí tu respuesta]
+El const cuenta como parte de la firma del método. tiempoCicloSeg() de la fresadora no sobrescribía al de la base era un método nuevo. procesar() usó el de la fresadora 60 s, pero capacidadPorHora() es const y solo podía ver el de la base 10 s. Por eso 3600 / 10 = 360.
 
 b) ¿Tu compilador mostró alguna advertencia antes de usar `override`? ¿Qué mensaje dio después de agregar `override`?
 
-[Inserta aquí tu respuesta]
+No me salio ninguna advertencia. En cambio, al poner override el compilador sí marcó error: marked 'override', but does not override. Corregí la firma a int tiempoCicloSeg() const override; y ya dio 60 pzas/h.]
 
 **3.3 Etapa 3. La línea de producción**
 
 a) ¿Por qué la línea procesó todo como "generico" si `procesar()` ya es virtual?
 
-[Inserta aquí tu respuesta]
+hace slicing con un std::vector<Maquina> guarda copias de tipo Maquina al agregar un torno solo se copia la parte de Maquina y se pierde lo demás.
 
 b) ¿Por qué el torno y la fresadora originales quedaron con 0 piezas?
 
-[Inserta aquí tu respuesta]
+Porque la línea trabajaba con copias, y los originales nunca se tocaron.
 
 c) La relación entre `ControlDeLinea` y `Maquina`, ¿es composición o agregación? ¿Por qué?
 
-[Inserta aquí tu respuesta]
+Es agregación. La línea solo conoce a las máquinas, pero no las crea ni las destruye. Si la línea desaparece, las máquinas siguen existiendo.
 
 **3.4 Etapa 4. Destructores**
 
