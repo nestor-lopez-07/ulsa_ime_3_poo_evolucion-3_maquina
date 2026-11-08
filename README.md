@@ -126,29 +126,29 @@ Antes el error pasaba sin avisar y terminaba en un reporte incorrecto. Ahora el 
 
 a) ¿Qué partes del contrato violó `InspeccionVisual`?
 
-[Inserta aquí tu respuesta]
+no registró la pieza ni el tiempo, y devolvió un tiempo de ciclo de 0, que no es mayor que cero. Por eso salió con 0 piezas y capacidad inf.
 
 b) ¿Por qué el compilador no lo detectó?
 
-[Inserta aquí tu respuesta]
+Porque el compilador solo revisa que las firmas estén bien (nombres, parámetros, tipos), pero no revisa lo que el método hace realmente.
 
 c) ¿Qué pasaría si el próximo equipo tampoco lee el comentario del contrato?
 
-[Inserta aquí tu respuesta]
+Pasaría lo mismo. Un comentario solo sirve si el otro equipo lo lee y lo respeta. Eso lo resuelve la Etapa 7.
 
 **3.7 Etapa 7. La base hace cumplir el contrato**
 
 a) ¿Cómo puede una clase derivada sobrescribir un método que es privado en la base?
 
-[Inserta aquí tu respuesta]
+Porque private controla quién puede llamar al método, mientras que virtual permite que las clases derivadas lo sobrescriban.
 
 b) ¿Qué ocurre ahora con una máquina cuyo tiempo de ciclo es 0? Compáralo con la Etapa 6.
 
-[Inserta aquí tu respuesta]
+Ahora el programa detecta el error y muestra un mensaje indicando qué máquina tiene un tiempo inválido. Antes se podía obtener una capacidad infinita.
 
 c) ¿Por qué la línea ignoró el "atajo" del torno, pero la llamada directa no? ¿Cómo corregiste el diseño?
 
-[Inserta aquí tu respuesta]
+Porque procesar() ya no es virtual. La línea utiliza el método de Maquina, que contiene las reglas del ciclo. La llamada directa utiliza el método propio de Torno. Para corregirlo, se elimina el atajo y se conserva el método de la clase base.
 
 **3.8 Etapa 8. Herencia mal usada**
 
