@@ -99,17 +99,17 @@ Es agregación. La línea solo conoce a las máquinas, pero no las crea ni las d
 
 | Momento | Mensajes de destrucción que aparecieron |
 | --- | --- |
-| `delete temporal;` sin destructor virtual | _____ |
-| `delete temporal;` con destructor virtual | _____ |
-| Al terminar `main` (torno y fresadora) | _____ |
+| `delete temporal;` sin destructor virtual | solo se observa Destruyendo Maquina al ejecutar delete temporal |
+| `delete temporal;` con destructor virtual | e ejecutan Destruyendo Torno, Destruyendo Motor y Destruyendo Maquina |
+| Al terminar `main` (torno y fresadora) | ejecutan los destructores automáticamente al salir de main. Primero se destruye Fresadora y después Torno |
 
 a) ¿Qué advertencia mostró el compilador? ¿Por qué decimos que ya te estaba avisando del problema?
 
-[Inserta aquí tu respuesta]
+Mostró una advertencia porque estaba intentando destruir un objeto Torno mediante un puntero Maquina, pero el destructor de Maquina no era virtual.
 
 b) ¿Por qué el torno de `main` sí se destruyó completo aunque el destructor no fuera virtual? ¿A qué máquina corresponde el primer "Destruyendo Maquina" después de "Fin de main"?
 
-[Inserta aquí tu respuesta]
+Porque el torno local se destruyó usando su tipo real, mientras que con delete temporal se utilizó un puntero de tipo Maquina. Al no tener un destructor virtual, no se llamó correctamente a los destructores de Torno y Motor.
 
 **3.5 Etapa 5. La clase abstracta**
 
