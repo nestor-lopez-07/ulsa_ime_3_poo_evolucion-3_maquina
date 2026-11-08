@@ -154,11 +154,12 @@ Porque procesar() ya no es virtual. La línea utiliza el método de Maquina, que
 
 a) Da al menos dos razones por las que `BandaTransportadora : public Motor` es un error de diseño.
 
-[Inserta aquí tu respuesta]
+Porque una banda transportadora no es un motor, es una máquina que utiliza un motor. 
+Al heredar de Motor permite que otras partes del programa cambien directamente su velocidad y no puede agregarse correctamente a la línea de producción como una Maquina.
 
 b) La relación entre `BandaTransportadora` y `Motor`, ¿es composición o agregación? ¿Por qué?
 
-[Inserta aquí tu respuesta]
+Es composición porque la banda tiene su propio motor como parte de ella. La banda controla cuándo y cómo utiliza ese motor.
 
 **3.9 Etapa 9. La librería y la prueba final**
 
