@@ -165,17 +165,17 @@ Es composición porque la banda tiene su propio motor como parte de ella. La ban
 
 a) Después de agregar la `Cortadora`, ¿qué archivos mostró `git status`? ¿Cuántos archivos de la librería tuviste que modificar?
 
-Se agregaron `include/Cortadora.h` y `src/Cortadora.cpp`, y se registró la nueva máquina en `src/main.cpp`. Para añadirla no fue necesario modificar los archivos de las demás clases de la librería: se creó la interfaz y la implementación de Cortadora.
+Se agregaron include/Cortadora.h y src/Cortadora.cpp, y se registró la nueva máquina en src/main.cpp. Para añadirla no fue necesario modificar los archivos de las demás clases de la librería: se creó la interfaz y la implementación de Cortadora.
 
 b) ¿Qué pasó al escribir `-lplanta` antes de `src/main.cpp`? ¿Por qué?
 
-Si se escribe `-lplanta` antes de `src/main.cpp` (o de los archivos objeto que usan la librería), el enlazador puede procesar la biblioteca estática antes de conocer las referencias que debe resolver y dejar símbolos sin resolver. La biblioteca debe aparecer después de los archivos objeto o fuentes que la utilizan.
+Si se escribe -lplanta antes de src/main.cpp (o de los archivos objeto que usan la librería), el enlazador puede procesar la biblioteca estática antes de conocer las referencias que debe resolver y dejar símbolos sin resolver. La biblioteca debe aparecer después de los archivos objeto o fuentes que la utilizan.
 
 **3.10 Bitácora de dudas**
 
 | # | Etapa | Duda | Cómo la resolví | Fuente |
 | --- | --- | --- | --- | --- |
-| 1 | 2 | ¿Por qué `tiempoCicloSeg()` no sobrescribía la versión de la base? | Añadí `const` a la firma y marqué la sobrescritura con `override`. | Mensaje del compilador y prueba de capacidad |
+| 1 | 2 | ¿Por qué tiempoCicloSeg() no sobrescribía la versión de la base? | Añadí const a la firma y marqué la sobrescritura con override. | Mensaje del compilador y prueba de capacidad |
 | 2 | 3 | ¿Por qué las máquinas de la línea no actualizaban los objetos originales? | Reemplacé el almacenamiento por valor con punteros a las máquinas existentes. | Reporte de piezas y conceptos de polimorfismo |
 | 3 | 7 | ¿Cómo garantizar que cada ciclo registre una pieza y un tiempo válidos? | La base valida el tiempo y centraliza el procesamiento y el registro. | Pruebas de tiempo inválido |
 
@@ -185,22 +185,22 @@ Si se escribe `-lplanta` antes de `src/main.cpp` (o de los archivos objeto que u
 
 | # | Caso | Resultado esperado | Resultado obtenido | ¿Pasa? |
 | --- | --- | --- | --- | --- |
-| 1 | Máquina con nombre vacío | Excepción con mensaje claro | `invalid_argument`: el nombre de la máquina no puede estar vacío | Sí |
+| 1 | Máquina con nombre vacío | Excepción con mensaje claro | invalid_argument: el nombre de la máquina no puede estar vacío | Sí |
 | 2 | Reporte de una línea vacía | "La linea no tiene maquinas" | Se imprime "La linea no tiene maquinas" y no se intenta reportar máquinas | Sí |
-| 3 | `agregar(nullptr)` | Devuelve `false` | Devuelve `false`; la línea queda sin cambios | Sí |
+| 3 | `agregar(nullptr)` | Devuelve `false` | Devuelve false; la línea queda sin cambios | Sí |
 | 4 | Reporte antes de ejecutar el turno | 0 piezas, 0 s y capacidad calculada | Torno nuevo: 0 piezas, 0 s y 80 pzas/h | Sí |
 | 5 | Turno de 0 ciclos | Nada cambia | Las piezas y el tiempo acumulado permanecen iguales | Sí |
 | 6 | Torno con 3 ciclos | 3 piezas, 135 s, 80 pzas/h | 3 piezas, 135 s y 80 pzas/h | Sí |
-| 7 | Máquina con `tiempoCicloSeg()` igual a 0 | Excepción con mensaje claro | `invalid_argument` con el nombre de la máquina; no se registra el ciclo | Sí |
-| 8 | Máquina con `tiempoCicloSeg()` negativo | Excepción con mensaje claro | `invalid_argument` con el nombre de la máquina; no se registra el ciclo | Sí |
-| 9 | La misma máquina agregada dos veces | El segundo registro devuelve `false`; se procesa y reporta una sola vez | El segundo `agregar` devuelve `false`; un ciclo registra una pieza y su tiempo una vez | Sí |
+| 7 | Máquina con `tiempoCicloSeg()` igual a 0 | Excepción con mensaje claro | invalid_argument con el nombre de la máquina; no se registra el ciclo | Sí |
+| 8 | Máquina con `tiempoCicloSeg()` negativo | Excepción con mensaje claro | invalid_argument con el nombre de la máquina; no se registra el ciclo | Sí |
+| 9 | La misma máquina agregada dos veces | El segundo registro devuelve false; se procesa y reporta una sola vez | El segundo agregar devuelve false; un ciclo registra una pieza y su tiempo una vez | Sí |
 
 **4.2 Bitácora de mejoras**
 
 | # | Falla o mejora detectada | Qué cambié | Por qué |
 | --- | --- | --- | --- |
 | 1 | Se podía calcular capacidad con tiempo cero o negativo | Validé el tiempo de ciclo antes de procesar y calcular capacidad | Evitar división entre cero y estados inválidos |
-| 2 | Una máquina podía agregarse varias veces a la línea | `agregar` rechaza punteros nulos y duplicados | Evitar procesamiento y conteo duplicados accidentales |
+| 2 | Una máquina podía agregarse varias veces a la línea | agregar rechaza punteros nulos y duplicados | Evitar procesamiento y conteo duplicados accidentales |
 
 Retos opcionales que intenté: agregué Cortadora como una nueva derivada sin modificar las otras clases de la librería.
 
@@ -217,13 +217,13 @@ https://github.com/nestor-lopez-07/ulsa_ime_3_poo_evolucion-3_maquina
 | Error | Etapa en que apareció | Restricción que lo impide ahora | ¿Quién lo detecta: el compilador o el programa? |
 | --- | --- | --- | --- |
 | Contadores con valores inválidos | 1 | Los contadores son privados y solo la base los modifica al procesar | El compilador impide el acceso directo; el programa valida entradas |
-| Máquina "fantasma" creada a escondidas | 1 | Constructor `explicit` | El compilador |
-| Método que no sobrescribe por un `const` | 2 | `override` en la declaración derivada | El compilador |
-| Máquinas copiadas y "rebanadas" | 3 | `ControlDeLinea` guarda punteros a `Maquina` | La decisión de diseño evita el slicing |
-| Destrucción incompleta | 4 | Destructor virtual de `Maquina` | El lenguaje despacha correctamente la destrucción polimórfica |
-| Máquina sin `procesar()` propio | 5 | `Maquina` es abstracta y `tiempoCicloSeg()` es virtual puro | El compilador impide instanciar una derivada incompleta |
+| Máquina "fantasma" creada a escondidas | 1 | Constructor explicit | El compilador |
+| Método que no sobrescribe por un const | 2 | override en la declaración derivada | El compilador |
+| Máquinas copiadas y "rebanadas" | 3 | ControlDeLinea guarda punteros a Maquina | La decisión de diseño evita el slicing |
+| Destrucción incompleta | 4 | Destructor virtual de Maquina | El lenguaje despacha correctamente la destrucción polimórfica |
+| Máquina sin procesar() propio | 5 | Maquina es abstracta y tiempoCicloSeg() es virtual puro | El compilador impide instanciar una derivada incompleta |
 | Tiempo de ciclo inválido | 7 | La base valida el ciclo antes de procesarlo y de calcular capacidad | El programa lanza una excepción |
-| Derivada que no registra sus piezas | 7 | `procesar()` no es virtual y la base registra cada ciclo | El diseño de la clase base |
+| Derivada que no registra sus piezas | 7 | procesar() no es virtual y la base registra cada ciclo | El diseño de la clase base |
 
 **6.2 ¿Cuál de los errores fue el más peligroso: el de compilación, la advertencia o el que compilaba sin problemas? ¿Por qué?**
 
