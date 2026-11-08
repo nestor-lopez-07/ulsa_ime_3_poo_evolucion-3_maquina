@@ -115,11 +115,12 @@ Porque el torno local se destruyó usando su tipo real, mientras que con delete 
 
 a) Copia los mensajes de error y explica con tus palabras qué dice cada uno.
 
-[Inserta aquí tu respuesta]
+cannot declare variable 'pulidora' to be of abstract type 'Pulidora': no puedo crear una pulidora porque le falta implementar procesar(), que en la base es virtual puro.
+cannot declare variable 'generica' to be of abstract type 'Maquina': Maquina ya es abstracta, entonces no se pueden crear objetos de ella.
 
 b) ¿Por qué es mejor este error de compilación que el comportamiento "generico" de antes?
 
-[Inserta aquí tu respuesta]
+Antes el error pasaba sin avisar y terminaba en un reporte incorrecto. Ahora el compilador lo detecta antes de ejecutar y dice qué falta.
 
 **3.6 Etapa 6. El contrato que el compilador no ve**
 
