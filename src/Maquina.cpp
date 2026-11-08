@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <stdexcept>
-
+namespace planta {
 Maquina::Maquina(const std::string& nombre)
     : nombre(nombre), piezasProcesadas(0), tiempoTrabajadoSeg(0) {
     if (nombre.empty()) {
@@ -24,7 +24,9 @@ void Maquina::agregarTiempo(int segundos) {
 int Maquina::tiempoCicloValidado() const {
     const int segundos = tiempoCicloSeg();
     if (segundos <= 0) {
-        throw std::invalid_argument("El tiempo de ciclo debe ser mayor que cero");
+        throw std::invalid_argument(
+            "El tiempo de ciclo de la maquina '" + nombre +
+            "' debe ser mayor que cero");
     }
     return segundos;
 }
@@ -47,4 +49,6 @@ int Maquina::getTiempoTrabajadoSeg() const { return tiempoTrabajadoSeg; }
 void Maquina::mostrarEstado() const {
     std::cout << nombre << " | piezas: " << piezasProcesadas
               << " | tiempo: " << tiempoTrabajadoSeg << " s | capacidad: " << capacidadPorHora() << " pzas/h\n";
+}
+
 }

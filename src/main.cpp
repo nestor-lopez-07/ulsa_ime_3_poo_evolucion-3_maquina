@@ -5,30 +5,28 @@
 #include "InspeccionVisual.h"
 #include "BandaTransportadora.h"
 
-#include <iostream>
 #include <exception>
+#include <iostream>
 
 int main() {
     try {
-        Torno torno("Torno T-01");
-        Fresadora fresadora("Fresadora F-01");
-        Pulidora pulidora("Pulidora P-01");
-        InspeccionVisual inspeccion("Inspeccion I-01");
-        BandaTransportadora banda("Banda B-01");
+        planta::Torno torno("Torno T-01");
+        planta::Fresadora fresadora("Fresadora F-01");
+        planta::Pulidora pulidora("Pulidora P-01");
+        planta::InspeccionVisual inspeccion("Inspeccion I-01");
+        planta::BandaTransportadora banda("Banda B-01");
 
-        ControlDeLinea linea;
+        planta::ControlDeLinea linea;
 
         linea.agregar(&torno);
         linea.agregar(&fresadora);
         linea.agregar(&pulidora);
         linea.agregar(&inspeccion);
         linea.agregar(&banda);
-        
 
         std::cout << "--- Turno de produccion ---\n";
         linea.ejecutarTurno(2);
 
-        std::cout << "--- Reporte de la linea ---\n";
         linea.imprimirReporte();
     } catch (const std::exception& e) {
         std::cout << "Error: " << e.what() << '\n';

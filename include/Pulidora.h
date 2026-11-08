@@ -2,7 +2,7 @@
 #define PULIDORA_H
 
 #include "Maquina.h"
-
+namespace planta {
 class Pulidora : public Maquina {
 private:
     void ejecutarCiclo() override;
@@ -12,5 +12,5 @@ public:
 
     int tiempoCicloSeg() const override;
 };
-
+}
 #endif

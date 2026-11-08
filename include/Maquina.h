@@ -2,7 +2,7 @@
 #define MAQUINA_H
 
 #include <string>
-
+namespace planta {
 // Clase base abstracta de todas las maquinas de la planta.
 //
 // CONTRATO para toda clase derivada:
@@ -40,5 +40,5 @@ public:
     int getTiempoTrabajadoSeg() const;
     void mostrarEstado() const;
 };
-
+}
 #endif

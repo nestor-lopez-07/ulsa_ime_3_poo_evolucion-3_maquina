@@ -1,7 +1,7 @@
 #include "ControlDeLinea.h"
 
 #include <iostream>
-
+namespace planta {
 bool ControlDeLinea::agregar(Maquina* maquina) {
     if (maquina == nullptr) {
         return false;
@@ -30,4 +30,5 @@ void ControlDeLinea::imprimirReporte() const {
         total += m->getPiezasProcesadas();
     }
     std::cout << "Total de piezas: " << total << '\n';
+}
 }
