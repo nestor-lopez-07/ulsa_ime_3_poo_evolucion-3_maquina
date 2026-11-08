@@ -26,11 +26,11 @@ Otros equipos también van a utilizar la clase Maquina para crear sus propias m�
 
 **2.1 Diagrama inicial (Etapa 0)**
 
-![Diagrama inicial](diseno_inicial.png)
+![Diagrama inicial](Diagrama_inicial.png)
 
 **2.2 Diagrama final (Etapa 9)**
 
-![Diagrama final](diseno_solucion.png)
+![Diagrama final](Diagrama_final.png)
 
 **2.3 ¿Qué cambió entre los dos diagramas?**
 
@@ -38,12 +38,12 @@ Otros equipos también van a utilizar la clase Maquina para crear sus propias m�
 | --- | --- | --- | --- |
 | Visibilidad de los atributos de `Maquina` | Públicos | Privados | Etapa 1 |
 | `procesar()` | No virtual | Se volvió virtual para permitir sobrescritura | Etapas 2 y 7: primero virtual; finalmente no virtual para que la base aplique el contrato |
-| `tiempoCicloSeg()` | Concreto | Virtual y después virtual puro con `const` | Etapas 2 y 5 |
-| Destructor de `Maquina` | No virtual | `virtual ~Maquina() = default;` | Etapa 4 |
+| `tiempoCicloSeg()` | Concreto | Virtual y después virtual puro con const | Etapas 2 y 5 |
+| Destructor de `Maquina` | No virtual | virtual ~Maquina() = default; | Etapa 4 |
 | ¿Se pueden crear objetos `Maquina`? | Sí | No, es abstracta | Etapa 5 |
 | Relación `ControlDeLinea` - `Maquina` | Copias por valor | Punteros, sin propiedad | Etapa 3 |
-| Relación `Torno` - `Motor` | Sin composición explícita | `Torno` contiene un `Motor` | Etapa 4 |
-| Relación `BandaTransportadora` - `Motor` | Herencia incorrecta | `BandaTransportadora` contiene un `Motor` | Etapa 8 |
+| Relación `Torno` - `Motor` | Sin composición explícita| Torno contiene un Motor | Etapa 4 |
+| Relación `BandaTransportadora` - `Motor` | Herencia incorrecta |BandaTransportadora contiene un Motor | Etapa 8 |
 
 ## Fase 3. Implementar
 
@@ -85,7 +85,7 @@ No me salio ninguna advertencia. En cambio, al poner override el compilador sí 
 
 a) ¿Por qué la línea procesó todo como "generico" si `procesar()` ya es virtual?
 
-hace slicing con un std::vector<Maquina> guarda copias de tipo Maquina al agregar un torno solo se copia la parte de Maquina y se pierde lo demás.
+hace slicing con un std::vector Maquina guarda copias de tipo Maquina al agregar un torno solo se copia la parte de Maquina y se pierde lo demás.
 
 b) ¿Por qué el torno y la fresadora originales quedaron con 0 piezas?
 
